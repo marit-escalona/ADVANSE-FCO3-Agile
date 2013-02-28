@@ -26,6 +26,7 @@ typedef struct TimeRecordingLog TimeRecordingLog;
 TimeRecordingLog *trl_new();
 void trl_set_user_name(TimeRecordingLog *trl, char *userName);
 void trl_add_entry(TimeRecordingLog *trl, TRLEntry *trlEntry);
+void trl_print(TimeRecordingLog *trl);
 
 
 TRLEntry *trl_entry_new();

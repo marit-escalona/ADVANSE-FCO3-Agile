@@ -4,6 +4,8 @@
 
 #include "trl.h"
 
+// TimeRecordingLog functions
+
 TimeRecordingLog *trl_new()
 {
     TimeRecordingLog *trl;
@@ -26,6 +28,24 @@ void trl_add_entry(TimeRecordingLog *trl, TRLEntry *trlEntry)
 {
     trl->entries[trl->numEntries++] = *trlEntry;
 }
+
+void trl_print(TimeRecordingLog *trl)
+{
+    int i;
+    TRLEntry trlEntry;
+
+    printf("Program number %d, written by %s\n", trl->programNumber, trl->userName);
+    printf("%d TRL entries\n", trl->numEntries);
+
+    for (i = 0; i < trl->numEntries; i++) {
+        trlEntry = trl->entries[i];
+        printf("%02d:%02d - %02d:%02d\n",
+                trlEntry.startTime.hour, trlEntry.startTime.minute,
+                trlEntry.endTime.hour, trlEntry.endTime.minute);
+    }
+}
+
+// TRLEntry functions
 
 TRLEntry *trl_entry_new()
 {

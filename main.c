@@ -16,7 +16,8 @@ int main(int argc, char **argv)
 
     trl_add_entry(trl, trlEntry);
 
-    printf("Hello, world!\n");
+    trl_print(trl);
+
     return 0;
 }
 
