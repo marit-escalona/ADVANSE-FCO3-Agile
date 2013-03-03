@@ -14,11 +14,10 @@
 
 // Program editing commands
 
-#define CMD_SET_TRL_INFO 1
-#define CMD_ADD_TRL_ENTRY 2
-#define CMD_VIEW_TRL_ENTRIES 3
+#define CMD_ADD_TRL_ENTRY 1
+#define CMD_VIEW_TRL_ENTRIES 2
 
-#define CMD_SAVE_TRL 4
+#define CMD_SAVE_TRL 3
 
 int input_projmenu_read();
 int input_projedit_read();
@@ -26,7 +25,6 @@ int input_projedit_read();
 User *input_create_user();
 void input_create_program_for_user(User *user);
 
-void input_set_trl_info(TimeRecordingLog *trl);
 void input_add_trl_entry(TimeRecordingLog *trl);
 
 void input_get_time(Time *time);

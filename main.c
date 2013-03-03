@@ -6,19 +6,29 @@
 #include "program.h"
 #include "user.h"
 
-void run_prog_edit_menu()
+Program *select_program_to_edit(User *user)
 {
-    TimeRecordingLog *trl;
+    int progID = -1;
+    printf("Enter the ID of the program you want to edit:\n");
+
+    while (progID < 0 || progID > user->numPrograms) {
+        user_print_programs(user);
+        scanf("%d", &progID);
+    }
+
+    return user->programs[progID];
+}
+
+void run_prog_edit_menu(User *user, Program *program)
+{
+    TimeRecordingLog *trl = &program->trl;
     int cmdCode;
 
     do {
+        printf("Editing program number %d\n", program->programNumber);
         cmdCode = input_projedit_read();
 
         switch (cmdCode) {
-        case CMD_SET_TRL_INFO:
-            input_set_trl_info(trl);
-            trl_print(trl);
-            break;
         case CMD_ADD_TRL_ENTRY:
             input_add_trl_entry(trl);
             break;
@@ -34,8 +44,6 @@ void run_prog_edit_menu()
             break;
         }
     } while (cmdCode != CMD_EXIT);
-
-    printf("Bye!\n");
 }
 
 int main(int argc, char **argv)
@@ -61,6 +69,13 @@ int main(int argc, char **argv)
             input_create_program_for_user(user);
             break;
         case CMD_EDIT_PROGRAM:
+            if (user->numPrograms == 0) {
+                printf("You don't have any programs.\n\n");
+            } else {
+                program = select_program_to_edit(user);
+                run_prog_edit_menu(user, program);
+                printf("Returning to projects menu\n\n");
+            }
             break;
         case CMD_LIST_PROGRAMS:
             user_print_programs(user);

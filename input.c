@@ -28,14 +28,13 @@ int input_projedit_read()
 
     printf("What would you like to do?\n");
 
-    printf("[%d] Set TRL Information\t", CMD_SET_TRL_INFO);
     printf("[%d] Add TRL Entry\t", CMD_ADD_TRL_ENTRY);
     printf("[%d] View TRL", CMD_VIEW_TRL_ENTRIES);
 
     printf("\n");
     printf("[%d] Save TRL", CMD_SAVE_TRL);
 
-    printf("\n[%d] Exit\n", CMD_EXIT);
+    printf("\n[%d] Return to Projects Menu\n", CMD_EXIT);
 
     printf("> ");
     scanf("%d", &input);
@@ -64,14 +63,6 @@ void input_create_program_for_user(User *user)
     scanf("%d", &program->programNumber);
 
     user_add_program(user, program);
-}
-
-void input_set_trl_info(TimeRecordingLog *trl)
-{
-    printf("Program number> ");
-    scanf("%d", &(trl->programNumber));
-    printf("Username> ");
-    scanf("%s", trl->userName);
 }
 
 void input_add_trl_entry(TimeRecordingLog *trl)
