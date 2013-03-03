@@ -1,23 +1,42 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "trl.h"
+#include "input.h"
 
 int main(int argc, char **argv)
 {
+    int cmdCode;
+
     TimeRecordingLog *trl;
     TRLEntry *trlEntry;
 
     trl = trl_new();
-    trl->programNumber = 1;
-    trl_set_user_name(trl, "Patrick Calulo");
 
-    trlEntry = trl_entry_new();
-    trl_entry_set_start(trlEntry, 8, 0);
-    trl_entry_set_end(trlEntry, 10, 0);
+    do {
+        cmdCode = input_read();
 
-    trl_add_entry(trl, trlEntry);
+        switch (cmdCode) {
+        case CMD_SET_TRL_INFO:
+            input_set_trl_info(trl);
+            trl_print(trl);
+            break;
+        case CMD_ADD_TRL_ENTRY:
+            break;
+        case CMD_VIEW_TRL_ENTRIES:
+            break;
+        case CMD_SAVE_TRL:
+            break;
+        case CMD_EXIT:
+            break;
+        default:
+            printf("Unknown command code\n");
+            break;
+        }
+    } while (cmdCode != CMD_EXIT);
 
-    trl_print(trl);
-
+    printf("Bye!\n");
+    free(trl);
     return 0;
 }
 
