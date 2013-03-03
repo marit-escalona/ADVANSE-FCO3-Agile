@@ -2,7 +2,27 @@
 
 #include "input.h"
 
-int input_read()
+int input_projmenu_read()
+{
+    int input;
+
+
+    printf("What would you like to do?\n");
+
+    printf("[%d] Create Program\t", CMD_CREATE_PROGRAM);
+    printf("[%d] Edit Program\t", CMD_EDIT_PROGRAM);
+    printf("[%d] View Program List", CMD_LIST_PROGRAMS);
+
+    printf("\n[%d] Exit\n", CMD_EXIT);
+
+    printf("> ");
+    scanf("%d", &input);
+    printf("\n");
+
+    return input;
+}
+
+int input_projedit_read()
 {
     int input;
 
@@ -24,6 +44,26 @@ int input_read()
     printf("\n");
 
     return input;
+}
+
+User *input_create_user()
+{
+    User *user = user_new();
+    printf("Name> ");
+    scanf("%s", user->name);
+
+    return user;
+}
+
+void input_create_program_for_user(User *user)
+{
+    Program *program = program_new();
+    printf("Creating program for %s:\n", user->name);
+
+    printf("Program number> ");
+    scanf("%d", &program->programNumber);
+
+    user_add_program(user, program);
 }
 
 void input_set_trl_info(TimeRecordingLog *trl)

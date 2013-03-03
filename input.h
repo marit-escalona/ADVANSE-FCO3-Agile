@@ -3,8 +3,16 @@
 #define _INPUT_H_
 
 #include "trl.h"
+#include "user.h"
 
 #define CMD_EXIT 0
+
+// Program menu commands
+#define CMD_CREATE_PROGRAM 1
+#define CMD_EDIT_PROGRAM 2
+#define CMD_LIST_PROGRAMS 3
+
+// Program editing commands
 
 #define CMD_SET_TRL_INFO 1
 #define CMD_ADD_TRL_ENTRY 2
@@ -12,7 +20,11 @@
 
 #define CMD_SAVE_TRL 4
 
-int input_read();
+int input_projmenu_read();
+int input_projedit_read();
+
+User *input_create_user();
+void input_create_program_for_user(User *user);
 
 void input_set_trl_info(TimeRecordingLog *trl);
 void input_add_trl_entry(TimeRecordingLog *trl);
