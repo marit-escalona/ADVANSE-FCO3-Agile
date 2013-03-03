@@ -22,8 +22,10 @@ int main(int argc, char **argv)
             trl_print(trl);
             break;
         case CMD_ADD_TRL_ENTRY:
+            input_add_trl_entry(trl);
             break;
         case CMD_VIEW_TRL_ENTRIES:
+            trl_print(trl);
             break;
         case CMD_SAVE_TRL:
             break;

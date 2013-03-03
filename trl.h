@@ -2,12 +2,23 @@
 #ifndef _TRL_H_
 #define _TRL_H_
 
+#define PHASE_PLANNING 1
+#define PHASE_DESIGN 2
+#define PHASE_CODING 3
+#define PHASE_COMPILE 4
+#define PHASE_DEBUG 5
+#define PHASE_TEST 6
+#define PHASE_POSTMORTEM 7
+
+const char *get_phase_name_string(int phaseID);
+
 struct Time {
     int hour;
     int minute;
 };
 
 struct TRLEntry {
+    int phaseID;
     struct Time startTime;
     struct Time endTime;
 };
@@ -20,6 +31,7 @@ struct TimeRecordingLog {
 };
 
 // Typedefs for convenience
+typedef struct Time Time;
 typedef struct TRLEntry TRLEntry;
 typedef struct TimeRecordingLog TimeRecordingLog;
 

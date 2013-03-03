@@ -15,6 +15,9 @@
 int input_read();
 
 void input_set_trl_info(TimeRecordingLog *trl);
+void input_add_trl_entry(TimeRecordingLog *trl);
+
+void input_get_time(Time *time);
 
 #endif // _INPUT_H_
 

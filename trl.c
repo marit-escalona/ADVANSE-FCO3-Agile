@@ -4,6 +4,28 @@
 
 #include "trl.h"
 
+const char *get_phase_name_string(int phaseID)
+{
+    switch (phaseID) {
+        case PHASE_PLANNING:
+            return "Planning";
+        case PHASE_DESIGN:
+            return "Design";
+        case PHASE_CODING:
+            return "Coding";
+        case PHASE_COMPILE:
+            return "Compile";
+        case PHASE_DEBUG:
+            return "Debug";
+        case PHASE_TEST:
+            return "Test";
+        case PHASE_POSTMORTEM:
+            return "Postmortem";
+        default:
+            return "Unknown";
+    }
+}
+
 // TimeRecordingLog functions
 
 TimeRecordingLog *trl_new()
@@ -34,15 +56,20 @@ void trl_print(TimeRecordingLog *trl)
     int i;
     TRLEntry trlEntry;
 
+    printf("\n========================================\n");
     printf("Program number %d, written by %s\n", trl->programNumber, trl->userName);
     printf("%d TRL entries\n", trl->numEntries);
 
+    printf("TIME\t\tPHASE\n");
     for (i = 0; i < trl->numEntries; i++) {
         trlEntry = trl->entries[i];
-        printf("%02d:%02d - %02d:%02d\n",
+        printf("%02d:%02d - %02d:%02d\t%s\n",
                 trlEntry.startTime.hour, trlEntry.startTime.minute,
-                trlEntry.endTime.hour, trlEntry.endTime.minute);
+                trlEntry.endTime.hour, trlEntry.endTime.minute,
+                get_phase_name_string(trlEntry.phaseID));
     }
+
+    printf("========================================\n\n");
 }
 
 // TRLEntry functions
