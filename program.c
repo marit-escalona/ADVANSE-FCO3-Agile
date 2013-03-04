@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "program.h"
 
@@ -15,5 +16,10 @@ Program *program_new()
     }
 
     return program;
+}
+
+void program_set_prog_number(Program *program, char *progNumber)
+{
+    strcpy(program->programNumber, progNumber);
 }
 

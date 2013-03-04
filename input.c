@@ -60,7 +60,7 @@ void input_create_program_for_user(User *user)
     printf("Creating program for %s:\n", user->name);
 
     printf("Program number> ");
-    scanf("%d", &program->programNumber);
+    scanf("%s", program->programNumber);
 
     user_add_program(user, program);
 }

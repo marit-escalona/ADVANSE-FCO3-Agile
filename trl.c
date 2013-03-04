@@ -57,7 +57,6 @@ void trl_print(TimeRecordingLog *trl)
     TRLEntry trlEntry;
 
     printf("\n========================================\n");
-    printf("Program number %d, written by %s\n", trl->programNumber, trl->userName);
     printf("%d TRL entries\n", trl->numEntries);
 
     printf("TIME\t\tPHASE\n");

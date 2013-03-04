@@ -38,7 +38,7 @@ void user_print_programs(User *user)
     printf("%s has %d programs:\n", user->name, user->numPrograms);
     printf("ID\tPROG #\n");
     for (i = 0; i < user->numPrograms; i++) {
-        printf("%d\t%d\n", i, user->programs[i]->programNumber);
+        printf("%d\t%s\n", i, user->programs[i]->programNumber);
     }
 
     printf("\n");

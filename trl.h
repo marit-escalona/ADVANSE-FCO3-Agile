@@ -24,7 +24,6 @@ struct TRLEntry {
 };
 
 struct TimeRecordingLog {
-    int programNumber;
     char userName[255];
     struct TRLEntry entries[100];   // Should be a linked list in final program
     int numEntries; // Only necessary while we're using an array

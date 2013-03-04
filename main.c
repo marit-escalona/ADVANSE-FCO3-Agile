@@ -13,9 +13,12 @@ Program *select_program_to_edit(User *user)
 
     while (progID < 0 || progID > user->numPrograms) {
         user_print_programs(user);
+
+        printf("ID> ");
         scanf("%d", &progID);
     }
 
+    printf("\n");
     return user->programs[progID];
 }
 
@@ -25,7 +28,7 @@ void run_prog_edit_menu(User *user, Program *program)
     int cmdCode;
 
     do {
-        printf("Editing program number %d\n", program->programNumber);
+        printf("Editing program %s\n", program->programNumber);
         cmdCode = input_projedit_read();
 
         switch (cmdCode) {
