@@ -28,7 +28,7 @@ Program *select_program_to_edit(User *user)
 
 void run_prog_edit_menu(User *user, Program *program)
 {
-    TimeRecordingLog *trl = &program->trl;
+    TimeRecordingLog *trl = program->trl;
     int cmdCode;
 
     do {

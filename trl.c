@@ -38,6 +38,7 @@ TimeRecordingLog *trl_new()
         exit(1);
     }
 
+    trl->numEntries = 0;
     return trl;
 }
 
