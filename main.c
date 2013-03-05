@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <mysql.h>
+
 #include "trl.h"
 #include "input.h"
 #include "program.h"
 #include "user.h"
+
+#include "dbconn.h"
 
 Program *select_program_to_edit(User *user)
 {
@@ -38,8 +42,6 @@ void run_prog_edit_menu(User *user, Program *program)
         case CMD_VIEW_TRL_ENTRIES:
             trl_print(trl);
             break;
-        case CMD_SAVE_TRL:
-            break;
         case CMD_EXIT:
             break;
         default:
@@ -56,6 +58,15 @@ int main(int argc, char **argv)
 
     User *user;
     Program *program;
+
+    MYSQL *conn;
+    conn = db_connect();
+    if (conn == NULL) {
+        printf("Failed to connect to MySQL!\n");
+        exit(1);
+    } else {
+        printf("Connected to MySQL.\n");
+    }
 
     printf("Creating a user:\n");
     user = input_create_user();
@@ -83,6 +94,8 @@ int main(int argc, char **argv)
         case CMD_LIST_PROGRAMS:
             user_print_programs(user);
             break;
+        case CMD_SAVE:
+            break;
         case CMD_EXIT:
             break;
         default:
@@ -91,6 +104,7 @@ int main(int argc, char **argv)
         }
     }
 
+    mysql_close(conn);
     printf("Bye!\n");
     return 0;
 }

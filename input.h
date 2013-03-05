@@ -12,12 +12,12 @@
 #define CMD_EDIT_PROGRAM 2
 #define CMD_LIST_PROGRAMS 3
 
+#define CMD_SAVE 4
+
 // Program editing commands
 
 #define CMD_ADD_TRL_ENTRY 1
 #define CMD_VIEW_TRL_ENTRIES 2
-
-#define CMD_SAVE_TRL 3
 
 int input_projmenu_read();
 int input_projedit_read();

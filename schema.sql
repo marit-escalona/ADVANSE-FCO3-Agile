@@ -1,0 +1,32 @@
+
+CREATE DATABASE IF NOT EXISTS ADVANSE_FCO3;
+USE ADVANSE_FCO3;
+
+DROP TABLE IF EXISTS Users;
+CREATE TABLE Users (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name VARCHAR(256)
+);
+
+DROP TABLE IF EXISTS Programs;
+CREATE TABLE Programs (
+    id INTEGER AUTO_INCREMENT,
+    programNumber VARCHAR(16),
+    userID INTEGER NOT NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (userID) REFERENCES Users(id)
+);
+
+DROP TABLE IF EXISTS TimeRecordingLogEntries;
+CREATE TABLE TimeRecordingLogs (
+    id INTEGER AUTO_INCREMENT,
+    startTime DATETIME,
+    endTime DATETIME,
+    phaseNumber INTEGER,
+    programID INTEGER NOT NULL, 
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (programID) REFERENCES Programs(id)
+);
+

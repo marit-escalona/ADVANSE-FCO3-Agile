@@ -13,7 +13,7 @@ int input_projmenu_read()
     printf("[%d] Edit Program\t", CMD_EDIT_PROGRAM);
     printf("[%d] View Program List", CMD_LIST_PROGRAMS);
 
-    printf("\n[%d] Exit\n", CMD_EXIT);
+    printf("\n[%d] Save to Database\t[%d] Exit\n", CMD_SAVE, CMD_EXIT);
 
     printf("> ");
     scanf("%d", &input);
@@ -30,9 +30,6 @@ int input_projedit_read()
 
     printf("[%d] Add TRL Entry\t", CMD_ADD_TRL_ENTRY);
     printf("[%d] View TRL", CMD_VIEW_TRL_ENTRIES);
-
-    printf("\n");
-    printf("[%d] Save TRL", CMD_SAVE_TRL);
 
     printf("\n[%d] Return to Projects Menu\n", CMD_EXIT);
 

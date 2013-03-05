@@ -1,10 +1,11 @@
 
 APPNAME = fco3
-OBJECTS = main.o trl.o input.o program.o user.o
-CFLAGS = -g
+OBJECTS = main.o trl.o input.o program.o user.o dbconn.o
+CFLAGS = -g `mysql_config --cflags`
+LDFLAGS = `mysql_config --libs`
 
 fco3 : $(OBJECTS)
-	gcc $(CFLAGS) $(OBJECTS) -o $(APPNAME)
+	gcc $(CFLAGS) $(OBJECTS) -o $(APPNAME) $(LDFLAGS)
 
 main.o : main.c
 	gcc $(CFLAGS) -c main.c
@@ -20,6 +21,9 @@ program.o : program.c program.h
 
 user.o : user.c user.h
 	gcc $(CFLAGS) -c user.c
+
+dbconn.o : dbconn.c dbconn.h
+	gcc $(CFLAGS) -c dbconn.c
 
 .PHONY : clean
 clean :
