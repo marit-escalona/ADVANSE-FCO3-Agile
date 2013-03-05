@@ -5,6 +5,7 @@
 #include "program.h"
 
 struct User {
+    int rowID;
     char name[255];
     Program *programs[10]; // TODO: Use linked list for final program
     int numPrograms; // Only necessary while we're not using a linked list

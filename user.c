@@ -16,6 +16,7 @@ User *user_new()
     }
 
     memset(user->programs, 0, sizeof(Program *) * 10);
+    user->rowID = -1;
     user->numPrograms = 0;
 
     return user;

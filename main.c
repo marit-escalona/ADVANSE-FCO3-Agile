@@ -55,6 +55,7 @@ int main(int argc, char **argv)
 {
     int cmdCode = -1;
     int isEditingProject = 0;
+    int numUsers;
 
     User *user;
     Program *program;
@@ -67,6 +68,8 @@ int main(int argc, char **argv)
     } else {
         printf("Connected to MySQL.\n");
     }
+
+    db_get_users(conn, &numUsers);
 
     printf("Creating a user:\n");
     user = input_create_user();
