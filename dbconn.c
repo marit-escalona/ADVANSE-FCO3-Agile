@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <string.h>
 #include <mysql.h>
 
 #include "dbconn.h"
@@ -25,9 +26,19 @@ User *db_get_users(MYSQL *conn, int *numUsers)
     User *users = NULL;
     User *user;
     int i = 0;
+    int fn_ret;
 
-    mysql_query(conn, "SELECT id, name FROM Users;");
-    result = mysql_use_result(conn);
+    fn_ret = mysql_query(conn, "SELECT id, name FROM Users");
+
+    if (fn_ret != 0) {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+    }
+
+    // mysql_store_result gets *all* rows in one go
+    result = mysql_store_result(conn);
+
+    // For this to return the correct number of rows, all rows must already have
+    // been retrieved from the database.
     *numUsers = (int) mysql_num_rows(result);
 
     // There is no point in continuing if there are no users
@@ -35,6 +46,7 @@ User *db_get_users(MYSQL *conn, int *numUsers)
         return NULL;
     }
 
+    // A utility function for allocation memory, from utils.h
     users = safe_alloc(sizeof(User) * *numUsers);
 
     while ((row = mysql_fetch_row(result))) {
@@ -47,5 +59,32 @@ User *db_get_users(MYSQL *conn, int *numUsers)
 
     mysql_free_result(result);
     return users;
+}
+
+void db_add_user(MYSQL *conn, User *user)
+{
+    MYSQL_STMT *stmt = mysql_stmt_init(conn);
+    MYSQL_BIND bind[1];
+    char *sql = "INSERT INTO Users (name) VALUES (?)";
+
+    // Prepared statements are used here to prevent SQL injection
+    if (mysql_stmt_prepare(stmt, sql, strlen(sql) != 0)) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
+    }
+
+    // Specify data type and size
+    memset(bind, 0, sizeof(bind));
+    bind[0].buffer_type = MYSQL_TYPE_STRING;
+    bind[0].buffer = user->name;
+    bind[0].buffer_length = strlen(user->name);
+    bind[0].length = &bind[0].buffer_length;
+
+    // Bind data to prepared statement
+    mysql_stmt_bind_param(stmt, bind);
+
+    // Run the prepared statement
+    if (mysql_stmt_execute(stmt) != 0) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
+    }
 }
 
