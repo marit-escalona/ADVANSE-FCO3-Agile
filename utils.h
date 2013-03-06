@@ -8,5 +8,6 @@
  */
 
 void *safe_alloc(size_t size);
+void string_chomp(char *string);
 
 #endif // _UTILS_H_
