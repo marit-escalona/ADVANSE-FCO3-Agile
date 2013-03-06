@@ -42,7 +42,7 @@ void user_print_programs(User *user)
     int i;
 
     printf("%s has %d programs:\n", user->name, user->numPrograms);
-    printf("ID\tPROG #\n");
+    printf("Index\tPROG #\n");
     for (i = 0; i < user->numPrograms; i++) {
         printf("%d\t%s\n", i, user->programs[i]->programNumber);
     }

@@ -13,7 +13,7 @@
 Program *select_program_to_edit(User *user)
 {
     int progID = -1;
-    printf("Enter the ID of the program you want to edit:\n");
+    printf("Enter the index of the program you want to edit:\n");
 
     while (progID < 0 || progID > user->numPrograms) {
         user_print_programs(user);
