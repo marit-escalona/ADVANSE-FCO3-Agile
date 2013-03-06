@@ -3,6 +3,7 @@
 #define _DBCONN_H_
 
 #include "user.h"
+#include "program.h"
 
 /*
  * For basic info on working with MySQL in C, see:
@@ -17,6 +18,8 @@
 MYSQL *db_connect();
 User *db_get_users(MYSQL *conn, int *numUsers);
 void db_add_user(MYSQL *conn, User *user);
+
+void db_get_programs_for_user(MYSQL *conn, User *user);
 
 #endif // _DBCONN_H_
 

@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <mysql.h>
 
@@ -46,11 +47,12 @@ User *db_get_users(MYSQL *conn, int *numUsers)
         return NULL;
     }
 
-    // A utility function for allocation memory, from utils.h
+    // A utility function for allocating memory, from utils.h
     users = safe_alloc(sizeof(User) * *numUsers);
 
     while ((row = mysql_fetch_row(result))) {
         user = (users + i);
+        user_init(user);
         user->rowID = atoi(row[0]);
         user_set_name(user, row[1]);
 
@@ -86,5 +88,52 @@ void db_add_user(MYSQL *conn, User *user)
     if (mysql_stmt_execute(stmt) != 0) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
     }
+}
+
+/*
+ * Gets the programs for the specified user, and updates the user struct with
+ * the retrieved programs.
+ */
+void db_get_programs_for_user(MYSQL *conn, User *user)
+{
+    MYSQL_RES *result;
+    MYSQL_ROW row;
+    Program *program;
+    int i = 0;
+    int fn_ret, numPrograms;
+    char queryBuf[100];
+
+    // We're dealing with an int - there should be no risk of SQL injection here
+    sprintf(queryBuf, "SELECT id, programNumber FROM Programs WHERE userID = %d",
+            user->rowID);
+
+    fn_ret = mysql_query(conn, queryBuf);
+
+    if (fn_ret != 0) {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+    }
+
+    // mysql_store_result gets *all* rows in one go
+    result = mysql_store_result(conn);
+
+    // For this to return the correct number of rows, all rows must already have
+    // been retrieved from the database.
+    numPrograms = (int) mysql_num_rows(result);
+
+    // There is no point in continuing if there are no users
+    if (numPrograms == 0) {
+        return;
+    }
+
+    while ((row = mysql_fetch_row(result))) {
+        program = program_new();
+        program->rowID = atoi(row[0]);
+        program_set_prog_number(program, row[1]);
+        user_add_program(user, program);
+
+        i++;
+    }
+
+    mysql_free_result(result);
 }
 

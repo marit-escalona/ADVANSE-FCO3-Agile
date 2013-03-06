@@ -15,11 +15,16 @@ User *user_new()
         exit(1);
     }
 
+    user_init(user);
+
+    return user;
+}
+
+void user_init(User *user)
+{
     memset(user->programs, 0, sizeof(Program *) * 10);
     user->rowID = -1;
     user->numPrograms = 0;
-
-    return user;
 }
 
 void user_set_name(User *user, char *name)

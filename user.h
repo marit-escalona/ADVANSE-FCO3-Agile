@@ -16,6 +16,7 @@ struct User {
 typedef struct User User;
 
 User *user_new();
+void user_init(User *user);
 void user_set_name(User *user, char *name);
 void user_add_program(User *user, Program *program);
 

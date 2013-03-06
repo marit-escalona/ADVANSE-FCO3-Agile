@@ -72,12 +72,21 @@ int main(int argc, char **argv)
     User *users = db_get_users(conn, &numUsers);
     printf("Found %d users.\n", numUsers);
 
-    printf("Creating a user:\n");
-    user = input_create_user();
+    // TODO: Implement proper user selection menu
+    if (numUsers > 0) {
+        // For the prototype, just pick the first user in the database
+        user = &users[0];
+        printf("Logging in as %s\n", user->name);
+    } else {
+        // No users - create one!
+        printf("Creating a user:\n");
+        user = input_create_user();
+    }
 
     db_add_user(conn, user);
 
     printf("Hello, %s!\n\n", user->name);
+    db_get_programs_for_user(conn, user);
 
      // Project/TRL input state menu
     while (cmdCode != CMD_EXIT) {

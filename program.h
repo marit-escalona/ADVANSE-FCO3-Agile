@@ -5,6 +5,7 @@
 #include "trl.h"
 
 struct Program {
+    int rowID;
     char programNumber[10];
     TimeRecordingLog *trl;
 };
