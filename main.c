@@ -81,9 +81,8 @@ int main(int argc, char **argv)
         // No users - create one!
         printf("Creating a user:\n");
         user = input_create_user();
+        db_add_user(conn, user);
     }
-
-    db_add_user(conn, user);
 
     printf("Hello, %s!\n\n", user->name);
     db_get_programs_for_user(conn, user);
