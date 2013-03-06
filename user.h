@@ -4,9 +4,11 @@
 
 #include "program.h"
 
+#define USER_NAME_LENGTH 255
+
 struct User {
     int rowID;
-    char name[255];
+    char name[USER_NAME_LENGTH];
     Program *programs[10]; // TODO: Use linked list for final program
     int numPrograms; // Only necessary while we're not using a linked list
 };

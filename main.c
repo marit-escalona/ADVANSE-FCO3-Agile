@@ -69,10 +69,13 @@ int main(int argc, char **argv)
         printf("Connected to MySQL.\n");
     }
 
-    db_get_users(conn, &numUsers);
+    User *users = db_get_users(conn, &numUsers);
+    printf("Found %d users.\n", numUsers);
 
     printf("Creating a user:\n");
     user = input_create_user();
+
+    db_add_user(conn, user);
 
     printf("Hello, %s!\n\n", user->name);
 

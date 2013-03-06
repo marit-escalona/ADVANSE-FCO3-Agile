@@ -46,7 +46,9 @@ User *input_create_user()
 {
     User *user = user_new();
     printf("Name> ");
-    scanf("%s", user->name);
+
+    fgets(user->name, USER_NAME_LENGTH, stdin);
+    string_chomp(user->name);
 
     return user;
 }

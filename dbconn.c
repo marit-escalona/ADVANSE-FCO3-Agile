@@ -68,7 +68,7 @@ void db_add_user(MYSQL *conn, User *user)
     char *sql = "INSERT INTO Users (name) VALUES (?)";
 
     // Prepared statements are used here to prevent SQL injection
-    if (mysql_stmt_prepare(stmt, sql, strlen(sql) != 0)) {
+    if (mysql_stmt_prepare(stmt, sql, strlen(sql)) != 0) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
     }
 
