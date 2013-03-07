@@ -25,7 +25,7 @@ int input_projedit_read();
 User *input_create_user();
 Program *input_create_program_for_user(User *user);
 
-void input_add_trl_entry(TimeRecordingLog *trl);
+TRLEntry *input_add_trl_entry(TimeRecordingLog *trl);
 
 void input_get_time(MYSQL_TIME *time);
 

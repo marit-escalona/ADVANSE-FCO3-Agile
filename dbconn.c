@@ -258,3 +258,50 @@ void db_get_trl_entries_for_program(MYSQL *conn, Program *program)
 
     mysql_stmt_close(stmt);
 }
+
+void db_add_trl_entry_for_program(MYSQL *conn, Program *program,
+        TRLEntry *trlEntry)
+{
+    MYSQL_STMT *stmt = mysql_stmt_init(conn);
+    MYSQL_BIND bind[4];
+    char *sql = "INSERT INTO TimeRecordingLogEntries "
+        "(startTime, endTime, phaseNumber, programID) VALUES "
+        "(?, ?, ?, ?)";
+
+    // Prepared statements are used here to prevent SQL injection
+    if (mysql_stmt_prepare(stmt, sql, strlen(sql)) != 0) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
+    }
+
+    // Specify data type and size
+    memset(bind, 0, sizeof(bind));
+
+    // startTime
+    bind[0].buffer_type = MYSQL_TYPE_DATETIME;
+    bind[0].buffer = (char *) &trlEntry->startTime;
+    bind[0].buffer_length = sizeof(MYSQL_TIME);
+
+    // endTime
+    bind[1].buffer_type = MYSQL_TYPE_DATETIME;
+    bind[1].buffer = (char *) &trlEntry->endTime;
+    bind[1].buffer_length = sizeof(MYSQL_TIME);
+
+    // phaseNumber
+    bind[2].buffer_type = MYSQL_TYPE_LONG;
+    bind[2].buffer = (char *) &trlEntry->phaseID;
+
+    // programID
+    bind[3].buffer_type = MYSQL_TYPE_LONG;
+    bind[3].buffer = (char *) &program->rowID;
+
+    // Bind data to prepared statement
+    mysql_stmt_bind_param(stmt, bind);
+
+    // Run the prepared statement
+    if (mysql_stmt_execute(stmt) != 0) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
+    }
+
+    trlEntry->rowID = mysql_insert_id(conn);
+}
+

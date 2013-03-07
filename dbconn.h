@@ -6,6 +6,7 @@
 
 #include "user.h"
 #include "program.h"
+#include "trl.h"
 
 /*
  * For basic info on working with MySQL in C, see:
@@ -25,6 +26,9 @@ void db_add_program_for_user(MYSQL *conn, User *user, Program *program);
 
 void db_get_programs_for_user(MYSQL *conn, User *user);
 void db_get_trl_entries_for_program(MYSQL *conn, Program *program);
+
+void db_add_trl_entry_for_program(MYSQL *conn, Program *program,
+        TRLEntry *trlEntry);
 
 #endif // _DBCONN_H_
 
