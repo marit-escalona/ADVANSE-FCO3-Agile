@@ -66,7 +66,7 @@ Program *input_create_program_for_user(User *user)
     return program;
 }
 
-void input_add_trl_entry(TimeRecordingLog *trl)
+TRLEntry *input_add_trl_entry(TimeRecordingLog *trl)
 {
     TRLEntry *trlEntry = trl_entry_new();
     int phaseID = -1;
@@ -99,7 +99,8 @@ void input_add_trl_entry(TimeRecordingLog *trl)
     input_get_time(&trlEntry->endTime);
 
     trl_add_entry(trl, trlEntry);
-    printf("\nAdded!\n");
+
+    return trlEntry;
 }
 
 void input_get_time(MYSQL_TIME *time)

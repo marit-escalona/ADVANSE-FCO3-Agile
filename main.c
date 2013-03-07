@@ -10,6 +10,8 @@
 
 #include "dbconn.h"
 
+MYSQL *conn;
+
 Program *select_program_to_edit(User *user)
 {
     int progID = -1;
@@ -29,6 +31,7 @@ Program *select_program_to_edit(User *user)
 void run_prog_edit_menu(User *user, Program *program)
 {
     TimeRecordingLog *trl = program->trl;
+    TRLEntry *trlEntry;
     int cmdCode;
 
     do {
@@ -37,7 +40,9 @@ void run_prog_edit_menu(User *user, Program *program)
 
         switch (cmdCode) {
         case CMD_ADD_TRL_ENTRY:
-            input_add_trl_entry(trl);
+            trlEntry = input_add_trl_entry(trl);
+            db_add_trl_entry_for_program(conn, program, trlEntry);
+            printf("Added!\n");
             break;
         case CMD_VIEW_TRL_ENTRIES:
             trl_print(trl);
@@ -60,7 +65,6 @@ int main(int argc, char **argv)
     User *user;
     Program *program;
 
-    MYSQL *conn;
     conn = db_connect();
     if (conn == NULL) {
         printf("Failed to connect to MySQL!\n");
