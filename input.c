@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <mysql.h>
 
 #include "input.h"
 
@@ -100,7 +101,7 @@ void input_add_trl_entry(TimeRecordingLog *trl)
     printf("\nAdded!\n");
 }
 
-void input_get_time(Time *time)
+void input_get_time(MYSQL_TIME *time)
 {
     printf("Hour> ");
     scanf("%d", &time->hour);

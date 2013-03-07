@@ -63,14 +63,9 @@ void trl_print(TimeRecordingLog *trl)
     printf("TIME\t\tPHASE\n");
     for (i = 0; i < trl->numEntries; i++) {
         trlEntry = trl->entries[i];
-        /*
         printf("%02d:%02d - %02d:%02d\t%s\n",
                 trlEntry.startTime.hour, trlEntry.startTime.minute,
                 trlEntry.endTime.hour, trlEntry.endTime.minute,
-                get_phase_name_string(trlEntry.phaseID));
-        */
-        printf("%s - %s\t%s\n",
-                trlEntry.startTime.stringRep, trlEntry.endTime.stringRep,
                 get_phase_name_string(trlEntry.phaseID));
     }
 
@@ -110,16 +105,5 @@ void trl_entry_set_end(TRLEntry *trlEntry, int hour, int minute)
 {
     trlEntry->endTime.hour = hour;
     trlEntry->endTime.minute = minute;
-}
-
-// PROTOTYPE USE ONLY
-void trl_entry_set_start_string_rep(TRLEntry *trlEntry, char *stringRep)
-{
-    strcpy(trlEntry->startTime.stringRep, stringRep);
-}
-
-void trl_entry_set_end_string_rep(TRLEntry *trlEntry, char *stringRep)
-{
-    strcpy(trlEntry->endTime.stringRep, stringRep);
 }
 

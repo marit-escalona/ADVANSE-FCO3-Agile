@@ -2,6 +2,8 @@
 #ifndef _DBCONN_H_
 #define _DBCONN_H_
 
+#include <mysql.h>
+
 #include "user.h"
 #include "program.h"
 

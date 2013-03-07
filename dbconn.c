@@ -140,14 +140,18 @@ void db_get_programs_for_user(MYSQL *conn, User *user)
 
 void db_get_trl_entries_for_program(MYSQL *conn, Program *program)
 {
-    // The commented out bit is roughly what a correct implementation looks
-    // like.
-    /*
     MYSQL_STMT *stmt = mysql_stmt_init(conn);
     MYSQL_BIND bind_param[1];
     MYSQL_BIND bind_result[4];
     char *sql = "SELECT id, startTime, endTime, phaseNumber "
         "FROM TimeRecordingLogEntries WHERE programID = ?";
+    TRLEntry *trlEntry;
+
+    int id_buffer, phase_num_buffer;
+    unsigned long lengths[4];
+    my_bool is_null[4];
+    my_bool errors[4];
+    MYSQL_TIME startTime, endTime;
 
     if (mysql_stmt_prepare(stmt, sql, strlen(sql)) != 0) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
@@ -155,52 +159,68 @@ void db_get_trl_entries_for_program(MYSQL *conn, Program *program)
 
     // Set up parameter
     memset(bind_param, 0, sizeof(bind_param));
-    bind_param[0].buffer_type = MYSQL_TYPE_STRING;
+    bind_param[0].buffer_type = MYSQL_TYPE_LONG;
     bind_param[0].buffer = &program->rowID;
     bind_param[0].buffer_length = sizeof(program->rowID);
-    bind_param[0].length = &bind_param[0].buffer_length;
 
     mysql_stmt_bind_param(stmt, bind_param);
 
     // Set up MYSQL_BIND output
     memset(bind_result, 0, sizeof(bind_result));
 
+    // id column
+    // Docs state that, for ints, one must use MYSQL_TYPE_LONG
+    bind_result[0].buffer_type = MYSQL_TYPE_LONG;
+    bind_result[0].buffer = &id_buffer;
+    bind_result[0].is_null = &is_null[0];
+    bind_result[0].length = &lengths[0];
+    bind_result[0].error = &errors[0];
+
+    // startTime column
+    bind_result[1].buffer_type = MYSQL_TYPE_DATETIME;
+    bind_result[1].buffer = (char *) &startTime;
+    bind_result[1].is_null = &is_null[1];
+    bind_result[1].length = &lengths[1];
+    bind_result[1].error = &errors[1];
+
+    // endTime column
+    bind_result[2].buffer_type = MYSQL_TYPE_DATETIME;
+    bind_result[2].buffer = (char *) &endTime;
+    bind_result[2].is_null = &is_null[2];
+    bind_result[2].length = &lengths[2];
+    bind_result[2].error = &errors[2];
+
+    bind_result[3].buffer_type = MYSQL_TYPE_LONG;
+    bind_result[3].buffer = &phase_num_buffer;
+    bind_result[3].is_null = &is_null[3];
+    bind_result[3].length = &lengths[3];
+    bind_result[3].error = &errors[3];
+
+    if (mysql_stmt_bind_result(stmt, bind_result) != 0) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
+    }
+
     // Run the prepared statement
     if (mysql_stmt_execute(stmt) != 0) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
     }
-    */
 
-    // This is a quickly-made implementation specifically made for the
-    // prototype.
-    MYSQL_RES *result;
-    MYSQL_ROW row;
-    int i = 0;
-    int fn_ret;
-    char querySql[128];
-    TRLEntry *trlEntry;
-
-    sprintf(querySql, "SELECT id, startTime, endTime, phaseNumber FROM TimeRecordingLogEntries WHERE programID = %d", program->rowID);
-
-    fn_ret = mysql_query(conn, querySql);
-
-    if (fn_ret != 0) {
-        fprintf(stderr, "%s\n", mysql_error(conn));
+    if (mysql_stmt_store_result(stmt) != 0) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
     }
 
-    // mysql_store_result gets *all* rows in one go
-    result = mysql_store_result(conn);
 
-    while ((row = mysql_fetch_row(result))) {
-        printf("%s - %s\n", row[1], row[2]);
+    int retVal;
+    while ((retVal = mysql_stmt_fetch(stmt)) == 0) {
         trlEntry = trl_entry_new();
-        trlEntry->rowID = atoi(row[0]);
-        trl_entry_set_start_string_rep(trlEntry, row[1]);
-        trl_entry_set_end_string_rep(trlEntry, row[2]);
-        trlEntry->phaseID = atoi(row[3]);
+        trlEntry->rowID = id_buffer;
+        trlEntry->startTime = startTime;
+        trlEntry->endTime = endTime;
+        trlEntry->phaseID = phase_num_buffer;
+
 
         trl_add_entry(program->trl, trlEntry);
     }
 
-    mysql_free_result(result);
+    mysql_stmt_close(stmt);
 }
