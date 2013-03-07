@@ -20,6 +20,7 @@ User *db_get_users(MYSQL *conn, int *numUsers);
 void db_add_user(MYSQL *conn, User *user);
 
 void db_get_programs_for_user(MYSQL *conn, User *user);
+void db_get_trl_entries_for_program(MYSQL *conn, Program *program);
 
 #endif // _DBCONN_H_
 

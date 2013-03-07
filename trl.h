@@ -15,9 +15,11 @@ const char *get_phase_name_string(int phaseID);
 struct Time {
     int hour;
     int minute;
+    char stringRep[64];
 };
 
 struct TRLEntry {
+    int rowID;
     int phaseID;
     struct Time startTime;
     struct Time endTime;
@@ -41,8 +43,14 @@ void trl_print(TimeRecordingLog *trl);
 
 
 TRLEntry *trl_entry_new();
+void trl_entry_init(TRLEntry *trlEntry);
 void trl_entry_set_start(TRLEntry *trlEntry, int hour, int minute);
 void trl_entry_set_end(TRLEntry *trlEntry, int hour, int minute);
+
+// PROTOTYPE USE ONLY
+// Implement "real" datetime handling code in dbconn
+void trl_entry_set_start_string_rep(TRLEntry *trlEntry, char *stringRep);
+void trl_entry_set_end_string_rep(TRLEntry *trlEntry, char *stringRep);
 
 #endif // _TRL_H_
 

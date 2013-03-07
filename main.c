@@ -101,6 +101,7 @@ int main(int argc, char **argv)
                 printf("You don't have any programs.\n\n");
             } else {
                 program = select_program_to_edit(user);
+                db_get_trl_entries_for_program(conn, program);
                 run_prog_edit_menu(user, program);
                 printf("Returning to projects menu\n\n");
             }
