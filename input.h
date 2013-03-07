@@ -23,7 +23,7 @@ int input_projmenu_read();
 int input_projedit_read();
 
 User *input_create_user();
-void input_create_program_for_user(User *user);
+Program *input_create_program_for_user(User *user);
 
 void input_add_trl_entry(TimeRecordingLog *trl);
 

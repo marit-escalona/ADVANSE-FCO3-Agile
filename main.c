@@ -94,7 +94,8 @@ int main(int argc, char **argv)
 
         switch (cmdCode) {
         case CMD_CREATE_PROGRAM:
-            input_create_program_for_user(user);
+            program = input_create_program_for_user(user);
+            db_add_program_for_user(conn, user, program);
             break;
         case CMD_EDIT_PROGRAM:
             if (user->numPrograms == 0) {

@@ -54,7 +54,7 @@ User *input_create_user()
     return user;
 }
 
-void input_create_program_for_user(User *user)
+Program *input_create_program_for_user(User *user)
 {
     Program *program = program_new();
     printf("Creating program for %s:\n", user->name);
@@ -63,6 +63,7 @@ void input_create_program_for_user(User *user)
     scanf("%s", program->programNumber);
 
     user_add_program(user, program);
+    return program;
 }
 
 void input_add_trl_entry(TimeRecordingLog *trl)

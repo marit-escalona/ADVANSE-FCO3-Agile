@@ -88,6 +88,40 @@ void db_add_user(MYSQL *conn, User *user)
     if (mysql_stmt_execute(stmt) != 0) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
     }
+
+    user->rowID = mysql_insert_id(conn);
+}
+
+void db_add_program_for_user(MYSQL *conn, User *user, Program *program)
+{
+    MYSQL_STMT *stmt = mysql_stmt_init(conn);
+    MYSQL_BIND bind[2];
+    char *sql = "INSERT INTO Programs (programNumber, userID) VALUES (?, ?)";
+
+    // Prepared statements are used here to prevent SQL injection
+    if (mysql_stmt_prepare(stmt, sql, strlen(sql)) != 0) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
+    }
+
+    // Specify data type and size
+    memset(bind, 0, sizeof(bind));
+    bind[0].buffer_type = MYSQL_TYPE_STRING;
+    bind[0].buffer = program->programNumber;
+    bind[0].buffer_length = strlen(program->programNumber);
+    bind[0].length = &bind[0].buffer_length;
+
+    bind[1].buffer_type = MYSQL_TYPE_LONG;
+    bind[1].buffer = &user->rowID;
+
+    // Bind data to prepared statement
+    mysql_stmt_bind_param(stmt, bind);
+
+    // Run the prepared statement
+    if (mysql_stmt_execute(stmt) != 0) {
+        fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
+    }
+
+    program->rowID = mysql_insert_id(conn);
 }
 
 /*
