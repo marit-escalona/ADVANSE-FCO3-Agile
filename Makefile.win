@@ -1,0 +1,48 @@
+# Project: FCO3
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = main.o dbconn.o input.o program.o trl.o user.o utils.o $(RES)
+LINKOBJ  = main.o dbconn.o input.o program.o trl.o user.o utils.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" -L"C:/Program Files/MySQL/Connector C 6.0.2/lib"  
+INCS =  -I"C:/Dev-Cpp/include"  -I"C:/Program Files/MySQL/Connector C 6.0.2/include" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include"  -I"C:/Program Files/MySQL/Connector C 6.0.2/include" 
+BIN  = FCO3.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS) -DBIG_JOINS=1 -fno-strict-aliasing -g  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before FCO3.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "FCO3.exe" $(LIBS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+dbconn.o: dbconn.c
+	$(CC) -c dbconn.c -o dbconn.o $(CFLAGS)
+
+input.o: input.c
+	$(CC) -c input.c -o input.o $(CFLAGS)
+
+program.o: program.c
+	$(CC) -c program.c -o program.o $(CFLAGS)
+
+trl.o: trl.c
+	$(CC) -c trl.c -o trl.o $(CFLAGS)
+
+user.o: user.c
+	$(CC) -c user.c -o user.o $(CFLAGS)
+
+utils.o: utils.c
+	$(CC) -c utils.c -o utils.o $(CFLAGS)
