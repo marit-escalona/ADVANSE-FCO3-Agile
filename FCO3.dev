@@ -1,9 +1,9 @@
 [Project]
 FileName=FCO3.dev
 Name=FCO3
-UnitCount=14
+UnitCount=16
 Type=1
-Ver=1
+Ver=2
 ObjFiles=
 Includes="C:\Program Files\MySQL\Connector C 6.0.2\include"
 Libs="C:\Program Files\MySQL\Connector C 6.0.2\lib"
@@ -28,6 +28,8 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000000000
+LogOutput=
+LogOutputEnabled=0
 
 [Unit1]
 FileName=main.c
@@ -185,4 +187,25 @@ OriginalFilename=
 ProductName=
 ProductVersion=
 AutoIncBuildNr=0
+SyncProduct=0
+
+[Unit15]
+FileName=pip.c
+CompileCpp=0
+Folder=FCO3
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit16]
+FileName=pip.h
+CompileCpp=0
+Folder=FCO3
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 
