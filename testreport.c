@@ -21,7 +21,7 @@ TestReport *add_testReport(TestReport *testReport, char testReportDesc[], char t
 	int testReportNumber = 1;
 	
 	if(testReport == NULL){
-		testReportNext = store_to_NextTestReport(testReport, 1, testReportDesc, testReportConditions, expectedResults, actualResults);
+		testReport = store_to_NextTestReport(testReport, 1, testReportDesc, testReportConditions, expectedResults, actualResults);
 	}
 	
 	else{
