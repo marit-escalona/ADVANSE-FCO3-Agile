@@ -1,6 +1,7 @@
 #include "testreport.h"
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 TestReport *init_testReport(){
 	TestReport *testReport;
@@ -43,10 +44,10 @@ TestReport *add_testReport(TestReport *testReport, char testReportDesc[], char t
 TestReport *store_to_NextTestReport(TestReport *testReportNext, int testReportNumber, char testReportDesc[], char testReportConditions[], char expectedResults[], char actualResults[]){
 	
 	testReportNext->testReportNumber = testReportNumber;
-	testReportNext->testReportDesc = testReportDesc;
-	testReportNext->testReportConditions = testReportConditions;
-	testReportNext->expectedResults = expectedResults;
-	testReportNext->actualResults = actualResults;
+	strcpy(testReportNext->testReportDesc, testReportDesc);
+	strcpy(testReportNext->testReportConditions, testReportConditions);
+	strcpy(testRepostNext->expectedResults, expectedResults);
+	strcpy(testReportNext->actualResults, actualResults);
 	
 	return testReportNext;
 }
