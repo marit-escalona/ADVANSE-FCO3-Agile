@@ -16,6 +16,17 @@ TestReport *init_testReport(){
 	return testReport;
 }
 
+TestReport *store_to_NextTestReport(TestReport *testReportNext, int testReportNumber, char testReportDesc[], char testReportConditions[], char expectedResults[], char actualResults[]){
+	
+	testReportNext->testReportNumber = testReportNumber;
+	strcpy(testReportNext->testReportDesc, testReportDesc);
+	strcpy(testReportNext->testReportConditions, testReportConditions);
+	strcpy(testReportNext->expectedResults, expectedResults);
+	strcpy(testReportNext->actualResults, actualResults);
+	
+	return testReportNext;
+}
+
 TestReport *add_testReport(TestReport *testReport, char testReportDesc[], char testReportConditions[], char expectedResults[], char actualResults[]){
 	TestReport *testReportCurrent;
 	TestReport *testReportNext;
@@ -39,15 +50,4 @@ TestReport *add_testReport(TestReport *testReport, char testReportDesc[], char t
 	}
 	
 	return testReport; 
-}
-
-TestReport *store_to_NextTestReport(TestReport *testReportNext, int testReportNumber, char testReportDesc[], char testReportConditions[], char expectedResults[], char actualResults[]){
-	
-	testReportNext->testReportNumber = testReportNumber;
-	strcpy(testReportNext->testReportDesc, testReportDesc);
-	strcpy(testReportNext->testReportConditions, testReportConditions);
-	strcpy(testRepostNext->expectedResults, expectedResults);
-	strcpy(testReportNext->actualResults, actualResults);
-	
-	return testReportNext;
 }
