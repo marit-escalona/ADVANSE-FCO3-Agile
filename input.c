@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <mysql.h>
+#include <windows.h>
+#include <mysql/mysql.h>
 
 #include "input.h"
 

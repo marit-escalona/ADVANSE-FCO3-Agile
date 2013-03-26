@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <mysql.h>
+#include <windows.h>
+#include <windows.h>
+#include <mysql/mysql.h>
 
 #include "trl.h"
 #include "input.h"
@@ -68,7 +70,7 @@ int main(int argc, char **argv)
     conn = db_connect();
     if (conn == NULL) {
         printf("Failed to connect to MySQL!\n");
-        exit(1);
+        //exit(1);
     } else {
         printf("Connected to MySQL.\n");
     }
