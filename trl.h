@@ -2,7 +2,8 @@
 #ifndef _TRL_H_
 #define _TRL_H_
 
-#include <mysql.h>
+#include <windows.h>
+#include <mysql/mysql.h>
 
 #define PHASE_PLANNING 1
 #define PHASE_DESIGN 2

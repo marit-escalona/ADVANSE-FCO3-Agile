@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <mysql.h>
+#include <windows.h>
+#include <mysql/mysql.h>
 
 #include "trl.h"
 #include "input.h"

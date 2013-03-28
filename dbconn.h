@@ -2,7 +2,8 @@
 #ifndef _DBCONN_H_
 #define _DBCONN_H_
 
-#include <mysql.h>
+#include <windows.h>
+#include <mysql/mysql.h>
 
 #include "user.h"
 #include "program.h"
@@ -14,7 +15,7 @@
  */
 
 #define DB_USERNAME "root"
-#define DB_PASSWORD "notsecure"
+#define DB_PASSWORD "password"
 #define DB_HOSTNAME "localhost"
 #define DB_DATABASE "ADVANSE_FCO3"
 

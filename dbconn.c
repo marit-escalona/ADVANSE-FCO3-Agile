@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <mysql.h>
+#include <windows.h>
+#include <mysql/mysql.h>
 
 #include "dbconn.h"
 
@@ -17,7 +18,7 @@ MYSQL *db_connect()
     // If we get connected, this returns conn
     // If not, this returns NULL
     return mysql_real_connect(conn, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD,
-            DB_DATABASE, 0, NULL, 0);
+            DB_DATABASE, 3306, NULL, 0);
 }
 
 User *db_get_users(MYSQL *conn, int *numUsers)
